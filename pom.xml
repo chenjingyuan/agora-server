@@ -1,0 +1,214 @@
+<project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
+	<modelVersion>4.0.0</modelVersion>
+  	<groupId>com.melot</groupId>
+  	<artifactId>AgoraRecordServer</artifactId>
+  	<version>1.0.1-SNAPSHOT</version>
+  	<name>AgoraRecordServer</name>
+  	<description>视频录制客户端</description>
+  	<properties>
+  		<spring.version>4.1.0.RELEASE</spring.version>
+		<project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
+  	</properties>
+
+	<!-- 设置默认的 Repository 为 Melot 的私服，而非 “http://repo1.maven.org/maven2/” -->
+	<repositories>
+		<repository>
+			<id>melot-nexus</id>
+			<name>Melot Nexus Public Repositories</name>
+			<url>http://maven.kktv2.com:8081/nexus/content/groups/public/</url>
+			<releases>
+				<enabled>true</enabled>
+			</releases>
+			<snapshots>
+				<enabled>true</enabled>
+			</snapshots>
+		</repository>
+	</repositories>
+	<pluginRepositories>
+		<pluginRepository>
+			<id>melot-nexus</id>
+			<name>Melot Nexus Public Repositories</name>
+			<url>http://maven.kktv2.com:8081/nexus/content/groups/public/</url>
+			<releases>
+				<enabled>true</enabled>
+			</releases>
+			<snapshots>
+				<enabled>false</enabled>
+			</snapshots>
+		</pluginRepository>
+	</pluginRepositories>
+
+
+	<dependencies>
+		<dependency>
+			<groupId>org.eclipse.jetty.aggregate</groupId>
+			<artifactId>jetty-all</artifactId>
+			<version>8.1.0.RC0</version>
+		</dependency>
+
+		<dependency>
+			<groupId>com.sun.jersey</groupId>
+			<artifactId>jersey-client</artifactId>
+			<version>1.8</version>
+		</dependency>
+
+		<dependency>
+			<groupId>com.sun.jersey</groupId>
+			<artifactId>jersey-json</artifactId>
+			<version>1.8</version>
+		</dependency>
+
+		<dependency>
+			<groupId>org.codehaus.jettison</groupId>
+			<artifactId>jettison</artifactId>
+			<version>1.1</version>
+		</dependency>
+
+		<dependency>
+			<groupId>org.springframework</groupId>
+			<artifactId>spring-beans</artifactId>
+			<version>${spring.version}</version>
+		</dependency>
+
+		<dependency>
+			<groupId>org.springframework</groupId>
+			<artifactId>spring-context</artifactId>
+			<version>${spring.version}</version>
+		</dependency>
+
+		<dependency>
+			<groupId>org.springframework</groupId>
+			<artifactId>spring-core</artifactId>
+			<version>${spring.version}</version>
+		</dependency>
+
+		<dependency>
+			<groupId>org.springframework</groupId>
+			<artifactId>spring-aop</artifactId>
+			<version>${spring.version}</version>
+		</dependency>
+
+		<dependency>
+			<groupId>org.springframework</groupId>
+			<artifactId>spring-tx</artifactId>
+			<version>${spring.version}</version>
+		</dependency>
+
+		<dependency>
+			<groupId>log4j</groupId>
+			<artifactId>log4j</artifactId>
+			<version>1.2.17</version>
+		</dependency>
+
+		<dependency>
+			<groupId>junit</groupId>
+			<artifactId>junit</artifactId>
+			<version>4.11</version>
+			<scope>test</scope>
+		</dependency>
+		
+		<dependency>
+    		<groupId>com.qiniu</groupId>
+    		<artifactId>qiniu-java-sdk</artifactId>
+    		<version>7.0.3</version>
+    		<exclusions>
+    			<exclusion>
+    				 <groupId>com.squareup.okhttp</groupId>
+      				 <artifactId>okhttp</artifactId>
+    			</exclusion>
+    		</exclusions>
+		</dependency>
+		
+		<dependency>
+  			<groupId>okio</groupId>
+  			<artifactId>okio</artifactId>
+  			<version>1.3.0</version>
+		</dependency>
+
+		<dependency>
+			<groupId>com.squareup.okhttp</groupId>
+			<artifactId>okhttp</artifactId>
+			<version>2.7.5</version>
+		</dependency>
+		<dependency>
+			<groupId>org.eclipse.jetty</groupId>
+			<artifactId>jetty-webapp</artifactId>
+			<version>8.1.0.RC0</version>
+		</dependency>
+		<dependency>
+			<groupId>com.sun</groupId>
+			<artifactId>jna</artifactId>
+			<version>1.0.0-SNAPSHOT</version>
+		</dependency>
+
+
+	</dependencies>
+
+	<build>
+		<finalName>AgoraRecordServer</finalName>
+		<plugins>
+			<plugin>
+				<groupId>org.apache.maven.plugins</groupId>
+				<artifactId>maven-surefire-plugin</artifactId>
+				<version>2.4.2</version>
+				<configuration>
+					<skipTests>true</skipTests>
+				</configuration>
+			</plugin>
+
+			<plugin>
+				<groupId>org.apache.maven.plugins</groupId>
+				<artifactId>maven-jar-plugin</artifactId>
+				<configuration>
+					<excludes>
+						<exclude>
+							**/*.properties
+						</exclude>
+					</excludes>
+					<archive>
+						<manifestFile>
+							src/main/resources/META-INF/MANIFEST.MF
+						</manifestFile>
+						<manifest>
+							<addClasspath>true</addClasspath>
+							<classpathPrefix>lib/</classpathPrefix>
+							<mainClass>
+								com.melot.recorder.Main
+							</mainClass>
+						</manifest>
+						<manifestEntries>
+							<Class-Path>conf/</Class-Path>
+						</manifestEntries>
+					</archive>
+				</configuration>
+			</plugin>
+
+			<plugin>
+				<artifactId>maven-assembly-plugin</artifactId>
+				<configuration>
+					<appendAssemblyId>false</appendAssemblyId>
+					<descriptors>
+						<descriptor>src/main/assembly/package.xml</descriptor>
+					</descriptors>
+				</configuration>
+				<executions>
+					<execution>
+						<id>make-assembly</id>
+						<phase>package</phase>
+						<goals>
+							<goal>single</goal>
+						</goals>
+					</execution>
+				</executions>
+			</plugin>
+
+
+
+
+
+		</plugins>
+	</build>
+
+
+
+</project>

@@ -1,0 +1,16 @@
+配置项说明
+capture.recorder.path: 截图程序所在文件路径
+capture.temp.path: 所截图片保存临时路径,程序启动自动创建本路径
+capture.rtmp.address: 视屏流拉取地址,不需要改动
+
+capture.picture.quality: 截图图片质量, 1~30, 越大压缩率越高,质量越差
+capture.picture.size: 截图大小
+
+
+capture.server.address: 远程截图服务器地址,调用列表获取,即时直播海报保存
+
+capture.work.interval: 程序启动周期,单位为秒
+capture.work.pool.size: 处理截图线程池大小
+
+capture.actor.type:  需要进行截取的房间类型,0:普通房 1:演艺房 2:游戏房
+capture.actor.size=100: 单次请求调用数据量

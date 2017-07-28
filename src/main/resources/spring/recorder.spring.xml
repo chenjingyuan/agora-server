@@ -1,0 +1,29 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns="http://www.springframework.org/schema/beans" 
+	 	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" 
+	 	xsi:schemaLocation="http://www.springframework.org/schema/beans
+           http://www.springframework.org/schema/beans/spring-beans-3.0.xsd">
+
+	<import resource="properties.xml" />
+
+
+	<bean id="recorderWorker" class="com.melot.recorder.worker.RecorderWorker">
+		<constructor-arg index="0" value="${recorder.work.pool.size:100}" />
+	</bean>
+	
+	
+
+	<bean id="globleApplicationContext" class="com.melot.recorder.utils.GlobleApplicationContext" />
+	
+	<bean id="server" class="com.melot.recorder.webservice.WebServer">  
+   		<constructor-arg index="0" value="${jetty.server.port:6666}" />
+   		<constructor-arg index="1" value="${jetty.context.path:/Agora}" />
+    </bean> 
+	
+<!--	<bean id="heartBeatClient" class="com.melot.recorder.heartbeat.HeartBeatClient">
+		<constructor-arg index="0" value="${recorder.server.host:10.0.0.23}" />
+   		<constructor-arg index="1" value="${recorder.server.heart.beat.port:9203}" />
+	</bean>-->
+	
+	
+</beans>
