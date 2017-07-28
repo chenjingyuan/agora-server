@@ -11,7 +11,7 @@
   	</properties>
 
 	<!-- 设置默认的 Repository 为 Melot 的私服，而非 “http://repo1.maven.org/maven2/” -->
-   <!--
+   
 	<repositories>
 		
 		<repository>
@@ -40,7 +40,7 @@
 		</pluginRepository>
 	</pluginRepositories>
 
--->
+
 	<dependencies>
 		<dependency>
 			<groupId>org.eclipse.jetty.aggregate</groupId>
