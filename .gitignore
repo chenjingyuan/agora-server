@@ -1,0 +1,8 @@
+#ignore setting files
+.idea
+*.iml
+.gitignore
+
+#ignore directory
+out/*
+target/*
